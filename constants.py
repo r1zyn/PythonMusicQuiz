@@ -156,6 +156,13 @@ questions: object = {
                 "message": "Ritardando shortened is rit., this means to gradually slow down in the given area until it has reached the “a tempo” message”.",
                 "type": "multichoice"
             },
+            {
+                "question": "What is the name of the musical device that helps you keep in tempo?",
+                "answer": "metronome",
+                "hint": "Begins with the letter M and makes clicking sounds on each beat.",
+                "message": "The metronome is important for all levels of musicians because it keeps a consistent tempo which helps reduce the effects of musicians constantly speeding up or slowing down in certain parts.",
+                "type": "word"
+            }
         ]
     },
     "beats": {
