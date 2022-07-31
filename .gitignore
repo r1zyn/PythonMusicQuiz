@@ -1,0 +1,6 @@
+# Python files
+__pycache__
+functions/__pycache__
+
+# Markdown linting file
+.markdownlint.json
