@@ -2,6 +2,9 @@ from functions.choose_topic import choose_topic
 from functions.run_question import run_question
 
 def run_topic(topic: object, marks: int) -> int:
+    """
+    Uses the given topic to select questions from the certain topic and begin asking the user the questions.
+    """
     new_marks: int = 0
     questions: list = topic["questions"]
 

@@ -1,9 +1,15 @@
 from functions.get_marks import get_marks
 
 def format_option(option: str) -> str:
+    """
+    Formats options into a string.
+    """
     return option["id"] + ") " + option["answer"]
 
 def run_question(question) -> int:
+    """
+    Initiates a question for the user.
+    """
     tries: int = 0
     options: list[str] = []
 
