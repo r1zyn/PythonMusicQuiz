@@ -43,7 +43,7 @@ def run_question(question) -> int:
             
             tries += 1
 
-        marks = get_marks(tries, question["type"])
+        marks: int = get_marks(tries, question["type"])
     elif question["type"] == "word":
         answer: str = input("Enter your answer: ").lower()
 
@@ -56,13 +56,14 @@ def run_question(question) -> int:
 
             tries += 1
 
-        marks = get_marks(tries, question["type"])
+        marks: int = get_marks(tries, question["type"])
     elif question["type"] == "order":
         print("Options:\n" + "\n".join(map(format_option, question["options"])))
         
         answer: str = input("Enter your answer: ").lower()
         correct_places: int = 0
-        matches = re.search("^(\d\,\s)+\d$", answer)
+        matches: re.Match = re.search("^(\d\,\s)+\d$", answer)
+
         while not matches:
             answer: str = input("Please provide a valid answer: ").lower()
 
@@ -72,7 +73,7 @@ def run_question(question) -> int:
             if v == question["answer"][i]:
                 correct_places += 1
 
-        marks = get_marks(type="order", correct_places=correct_places)
+        marks: int = get_marks(type="order", correct_places=correct_places)
                
     if question["type"] == "order":
         print("You got " + str(correct_places) + " correct place(s)!" + " You earned " + str(marks) + " marks.")
