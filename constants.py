@@ -47,7 +47,7 @@ questions: object = {
                     }
                 ],
                 "answer": "b",
-                "hint": "The first letters of the 2 words are the acronyms",
+                "hint": "The first letters of the 2 words are the acronyms.",
                 "message": "The mezzo-forte, is put as “mf” in music sheets and means to play it moderately loud.",
                 "type": "multichoice"
             },
@@ -64,14 +64,99 @@ questions: object = {
                     }
                 ],
                 "answer": "a",
-                "hint": "Mezzo means moderately",
+                "hint": "Mezzo means moderately.",
                 "message": "Mezzo-forte is moderately loud, forte is just loud.",
+                "type": "true/false"
+            },
+            {
+                "question": "Mf and mp are equally loud - true or false?",
+                "options": [
+                    {
+                        "id": "a",
+                        "answer": "true"
+                    },
+                    {
+                        "id": "b",
+                        "answer": "false"
+                    }
+                ],
+                "answer": "b",
+                "hint": "Mp means mezzo piano and mf means mezzo forte.",
+                "message": "No notation in music have the same degree of loudness.",
                 "type": "true/false"
             }
         ]
     },
     "speed_tempo": {
-        "questions": []
+        "questions": [
+            {
+                "question": "Allegro is fast - true or false?",
+                "options": [
+                    {
+                        "id": "a",
+                        "answer": "true"
+                    },
+                    {
+                        "id": "b",
+                        "answer": "false"
+                    }
+                ],
+                "answer": "a",
+                "hint": "Similar meaning to the english meaning of moving briskly fast.",
+                "message": "Allegro is commonly referred to as the basis of the fast tempo.",
+                "type": "true/false"
+            },
+            {
+                "question": "What does decelerando mean?",
+                "options": [
+                    {
+                        "id": "a",
+                        "answer": "Getting faster"
+                    },
+                    {
+                        "id": "b",
+                        "answer": "Remain the same"
+                    },
+                    {
+                        "id": "c",
+                        "answer": "Getting slower"
+                    },
+                    {
+                        "id": "d",
+                        "answer": "Getting faster then slower"
+                    }
+                ],
+                "answer": "c",
+                "hint": "Decelerando has a similar meaning to decceleration.",
+                "message": "Decelerando means to gradually play slower.",
+                "type": "multichoice"
+            },
+            {
+                "question": "Ritardando written on a music sheet is:",
+                "options": [
+                    {
+                        "id": "a",
+                        "answer": "rit."
+                    },
+                    {
+                        "id": "b",
+                        "answer": "r."
+                    },
+                    {
+                        "id": "c",
+                        "answer": "rdd."
+                    },
+                    {
+                        "id": "d",
+                        "answer": "rt."
+                    }
+                ],
+                "answer": "a",
+                "hint": "DIn music sheets, most of the time the words are shortened with the first letter(s).",
+                "message": "Ritardando shortened is rit., this means to gradually slow down in the given area until it has reached the “a tempo” message”.",
+                "type": "multichoice"
+            },
+        ]
     },
     "beats": {
         "questions": []
