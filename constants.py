@@ -84,6 +84,31 @@ questions: object = {
                 "hint": "Mp means mezzo piano and mf means mezzo forte.",
                 "message": "No notation in music have the same degree of loudness.",
                 "type": "true/false"
+            },
+            {
+                "question": "Rank these from quietest to loudest: (in the format 1, 2, 3, 4)",
+                "options": [
+                    {
+                        "id": "1",
+                        "answer": "f"
+                    },
+                    {
+                        "id": "2",
+                        "answer": "mp"
+                    },
+                    {
+                        "id": "3",
+                        "answer": "ppp"
+                    },
+                    {
+                        "id": "4",
+                        "answer": "pp"
+                    }
+                ],
+                "answer": ["3", "4", "2", "1"],
+                "hint": "ppp just means it is more quieter than pp which is more quieter than p.",
+                "message": "ppp means pianississimo, pp means pianissimo, mp means mezzo-piano, f means fort",
+                "type": "order"
             }
         ]
     },

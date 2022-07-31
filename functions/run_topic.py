@@ -9,7 +9,7 @@ def run_topic(topic: object, marks: int) -> int:
     questions: list = topic["questions"]
 
     for question in questions:
-        marks += run_question(question)
+        new_marks += run_question(question)
 
     print(f"Congratulations on completing the topic! You earned {new_marks} marks.")
     run_next: str = input(f"Would you like to do another topic? (y/n)\n").lower()

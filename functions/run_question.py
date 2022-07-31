@@ -1,4 +1,6 @@
+import enum
 from functions.get_marks import get_marks
+import re
 
 def format_option(option: str) -> str:
     """
@@ -12,6 +14,7 @@ def run_question(question) -> int:
     """
     tries: int = 0
     options: list[str] = []
+    marks: int = 0
 
     print("Question: " + question["question"])
 
@@ -39,9 +42,11 @@ def run_question(question) -> int:
                 answer: str = input("Please provide a valid answer: ").lower()
             
             tries += 1
+
+        marks = get_marks(tries, question["type"])
     elif question["type"] == "word":
         answer: str = input("Enter your answer: ").lower()
-        
+
         while answer.lower() != question["answer"].lower():
             if tries == 1:
                 print("Here's a hint: " + question["hint"])
@@ -51,6 +56,28 @@ def run_question(question) -> int:
 
             tries += 1
 
-    print("Correct! " + question["message"] + " You earned " + str(get_marks(tries, question["type"])) + " marks with " + str(tries) + " tries.")
-    return get_marks(tries, question["type"])
+        marks = get_marks(tries, question["type"])
+    elif question["type"] == "order":
+        print("Options:\n" + "\n".join(map(format_option, question["options"])))
+        
+        answer: str = input("Enter your answer: ").lower()
+        correct_places: int = 0
+        matches = re.search("^(\d\,\s)+\d$", answer)
+        while not matches:
+            answer: str = input("Please provide a valid answer: ").lower()
+
+        answer: list[str] = answer.split(", ")
+
+        for i, v in enumerate(answer):
+            if v == question["answer"][i]:
+                correct_places += 1
+
+        marks = get_marks(type="order", correct_places=correct_places)
+               
+    if question["type"] == "order":
+        print("You got " + str(correct_places) + " correct place(s)!" + " You earned " + str(marks) + " marks.")
+    else:
+        print("Correct! " + question["message"] + " You earned " + str(marks) + " marks with " + str(tries) + " tries.")
+        
+    return marks
     
