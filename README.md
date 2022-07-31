@@ -1,2 +1,2 @@
 # Python Music Quiz
-Small Python music quiz program.
+A small Python music quiz program.
