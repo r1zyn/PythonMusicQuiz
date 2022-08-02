@@ -205,7 +205,7 @@ topics = {
     "dynamics": "dynamics",
     "speed and tempo": "speed_tempo",
     "beats": "beats",
-    "time signature and Clef": "timesigs_clefs"
+    "time signature and clef": "timesigs_clefs"
 }
 """
 Topics dictionary mapping more readable topic names into the questions dictionary keys.

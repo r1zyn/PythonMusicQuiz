@@ -1,4 +1,3 @@
-import enum
 from functions.get_marks import get_marks
 import re
 
