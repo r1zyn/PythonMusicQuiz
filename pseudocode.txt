@@ -1,4 +1,4 @@
-FROM constants IMPORT questions, topics, topic_list
+from constants IMPORT questions, topics, topic_list
 
 
 
@@ -86,23 +86,23 @@ DEFINE FUNCTION run_questions(question_list):
 
         IF question["type"] != "order":
 
-            SET answer TO INPUT("Enter your answer: ").lower()
+            SET answer TO INPUT("Enter your answer: ")
 
             tries += 1
 
 
 
-            WHILE answer != question["answer"].lower():
+            WHILE answer != question["answer"]:
 
                 IF tries EQUALS 1:
 
                     OUTPUT("Hint: " + question["hint"])
 
-                    SET answer TO INPUT("Enter your answer: ").lower()
+                    SET answer TO INPUT("Enter your answer: ")
 
                 ELSE:
 
-                    SET answer TO INPUT("Incorrect! Re-enter your answer: ").lower()
+                    SET answer TO INPUT("Incorrect! Re-enter your answer: ")
 
 
 
@@ -124,7 +124,7 @@ DEFINE FUNCTION run_questions(question_list):
 
 
 
-            SET answer TO INPUT("Enter your answer: ").lower()
+            SET answer TO INPUT("Enter your answer: ")
 
             SET correct_places TO 0
 
@@ -152,13 +152,13 @@ DEFINE FUNCTION run_questions(question_list):
 
 DEFINE FUNCTION init():
 
-    SET selection TO INPUT("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
+    SET selection TO INPUT("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
 
 
 
     WHILE not selection IN topic_list:
 
-        SET selection TO INPUT("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
+        SET selection TO INPUT("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
 
 
 
@@ -168,7 +168,7 @@ DEFINE FUNCTION init():
 
 
 
-    SET run_next TO INPUT(f"Would you like to do another topic? (y/n)\n").lower()
+    SET run_next TO INPUT(f"Would you like to do another topic? (y/n)\n")
 
     IF run_next EQUALS "y" or run_next EQUALS "yes":
 
@@ -178,7 +178,7 @@ DEFINE FUNCTION init():
 
     ELSE: 
 
-        OUTPUT(f"Cancelled topic selection. Thanks for playing! You earned a total of {marks} marks.")
+        OUTPUT(f"Cancelled topic selection. Thanks FOR playing! You earned a total of {marks} marks.")
 
 
 
