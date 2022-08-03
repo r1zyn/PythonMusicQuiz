@@ -1,4 +1,4 @@
-from constants import questions, topics, topic_list
+from extra.constants import questions, topics, topic_list
 
 def choose_topic() -> list:
     """

@@ -1,4 +1,4 @@
-questions: object = {
+questions = {
     "dynamics": {
         "questions": [
             {
@@ -11,7 +11,7 @@ questions: object = {
             },
             {
                 "question": "Which of these represent mezzo-forte? (Choose from a, b, c or d)",
-                "options": "a) mp\nb( mf\nc) pp\nd) ff",
+                "options": "a) mp\nb) mf\nc) pp\nd) ff",
                 "answer": "b",
                 "hint": "The first letters of the 2 words are the acronyms.",
                 "message": "The mezzo-forte, is put as “mf” in music sheets and means to play it moderately loud.",
@@ -65,4 +65,14 @@ topics = {
 }
 """
 Topics dictionary mapping more readable topic names into the questions dictionary keys.
+"""
+
+topic_list = [
+    "dynamics",
+    "speed and tempo",
+    "beats",
+    "time signature and clef"
+]
+"""
+List of topics for the user to choose from.
 """
