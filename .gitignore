@@ -1,6 +1,8 @@
-# Python files
+# Python generated files
 __pycache__
 **/*/__pycache__
+
+convert.py
 
 # Markdown linting file
 .markdownlint.json

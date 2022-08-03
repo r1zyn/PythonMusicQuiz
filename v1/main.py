@@ -1,4 +1,4 @@
-from extra.constants import questions, topics, topic_list
+from constants import questions, topics, topic_list
 
 marks = 0
 

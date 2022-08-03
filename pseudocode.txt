@@ -1,0 +1,185 @@
+FROM constants IMPORT questions, topics, topic_list
+
+
+
+SET marks TO 0
+
+
+
+SET def get_marks(tries TO 0, type TO "", correct_places TO 0):
+
+    IF type.lower() EQUALS "multichoice" or type.lower() EQUALS "word":
+
+        IF tries EQUALS 1:
+
+            RETURN 10
+
+        ELSEIF tries EQUALS 2:
+
+            RETURN 5
+
+        ELSEIF tries EQUALS 3:
+
+            RETURN 3
+
+        ELSEIF tries EQUALS 4:
+
+            RETURN 1
+
+        ELSE:
+
+            RETURN 0
+
+    ELSEIF type.lower() EQUALS "true/false":
+
+        IF tries EQUALS 1:
+
+            RETURN 10
+
+        ELSEIF tries EQUALS 2:
+
+            RETURN 5
+
+        ELSE:
+
+            RETURN 0
+
+    ELSEIF type.lower() EQUALS "order":
+
+        IF correct_places EQUALS 4:
+
+            RETURN 10
+
+        ELSEIF correct_places EQUALS 3:
+
+            RETURN 5
+
+        ELSEIF correct_places EQUALS 2:
+
+            RETURN 3
+
+        ELSEIF correct_places EQUALS 1:
+
+            RETURN 1
+
+        ELSE: 
+
+            RETURN 0
+
+
+
+DEFINE FUNCTION run_questions(question_list):
+
+    global marks
+
+    SET tries TO 0
+
+
+
+    FOR question IN question_list:
+
+        OUTPUT("Question: " + question["question"])
+
+        OUTPUT("Options:\n" + question["options"])
+
+
+
+        IF question["type"] != "order":
+
+            SET answer TO INPUT("Enter your answer: ").lower()
+
+            tries += 1
+
+
+
+            WHILE answer != question["answer"].lower():
+
+                IF tries EQUALS 1:
+
+                    OUTPUT("Hint: " + question["hint"])
+
+                    SET answer TO INPUT("Enter your answer: ").lower()
+
+                ELSE:
+
+                    SET answer TO INPUT("Incorrect! Re-enter your answer: ").lower()
+
+
+
+                tries += 1
+
+
+
+            SET earned_marks TO get_marks(tries=tries, type=question["type"])
+
+            marks += earned_marks
+
+            OUTPUT("Correct! " + question["message"])
+
+            OUTPUT(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
+
+        ELSE:
+
+            OUTPUT("Hint: " + question["hint"])
+
+
+
+            SET answer TO INPUT("Enter your answer: ").lower()
+
+            SET correct_places TO 0
+
+            SET option_amount TO len(question["answer"])
+
+
+
+            FOR i IN range(option_amount):
+
+                IF answer.split(", ")[i] EQUALS question["answer"][i]:
+
+                    correct_places += 1
+
+
+
+            SET earned_marks TO get_marks(type=question["type"], correct_places=correct_places)
+
+            marks += earned_marks
+
+            OUTPUT("Correct! " + question["message"])
+
+            OUTPUT(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
+
+
+
+DEFINE FUNCTION init():
+
+    SET selection TO INPUT("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
+
+
+
+    WHILE not selection IN topic_list:
+
+        SET selection TO INPUT("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
+
+
+
+    SET topic TO questions[topics[selection]]
+
+    run_questions(topic["questions"])
+
+
+
+    SET run_next TO INPUT(f"Would you like to do another topic? (y/n)\n").lower()
+
+    IF run_next EQUALS "y" or run_next EQUALS "yes":
+
+        SET topic TO init()
+
+        run_questions(topic["questions"])
+
+    ELSE: 
+
+        OUTPUT(f"Cancelled topic selection. Thanks for playing! You earned a total of {marks} marks.")
+
+
+
+init()
