@@ -83,7 +83,7 @@ def init():
     topic = questions[topics[selection]]
     run_questions(topic["questions"])
 
-    run_next: str = input(f"Would you like to do another topic? (y/n)\n").lower()
+    run_next = input(f"Would you like to do another topic? (y/n)\n").lower()
     if run_next == "y" or run_next == "yes":
         topic = init()
         run_questions(topic["questions"])
