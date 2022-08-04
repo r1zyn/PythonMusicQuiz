@@ -1,9 +1,7 @@
-from constants import questions, topics, topic_list
-
 marks = 0
 
 def get_marks(tries = 0, type = "", correct_places = 0):
-    if type.lower() == "multichoice" or type.lower() == "word":
+    if type == "multichoice" or type == "word":
         if tries == 1:
             return 10
         elif tries == 2:
@@ -14,14 +12,14 @@ def get_marks(tries = 0, type = "", correct_places = 0):
             return 1
         else:
             return 0
-    elif type.lower() == "true/false":
+    elif type == "true/false":
         if tries == 1:
             return 10
         elif tries == 2:
             return 5
         else:
             return 0
-    elif type.lower() == "order":
+    elif type == "order":
         if correct_places == 4:
             return 10
         elif correct_places == 3:
@@ -33,55 +31,53 @@ def get_marks(tries = 0, type = "", correct_places = 0):
         else: 
             return 0
 
-def run_questions(question_list):
-    global marks
+def run_questions(topic):
     tries = 0
 
-    for question in question_list:
-        print("Question: " + question["question"])
-        print("Options:\n" + question["options"])
+    if topic == "dynamics":
+        print("What does a crescendo mean? (Choose from a, b, c or d)")
+        print("a) Getting louder\nb) Getting quiter\nc) Getting faster\nd) Getting slower")
+        answer = input("Your answer: ")
+        tries += 1
 
-        if question["type"] != "order":
-            answer = input("Enter your answer: ")
-            tries += 1
-
-            while answer != question["answer"]:
-                if tries == 1:
-                    print("Hint: " + question["hint"])
-                    answer = input("Enter your answer: ")
-                else:
-                    answer = input("Incorrect! Re-enter your answer: ")
-
+        while tries != "a":
+            if tries == 1:
+                print("Hint: It is similar to the english definition.")
+                answer = input("Your answer: ")
                 tries += 1
+            else:
+                answer = input("Incorrect! Re-enter your answer: ")
+                tries += 1
+        
+        marks = get_marks(tries=tries, type="multichoice")
+        print("Correct! Crescendo in music means to play gradually louder, the speed remains the same and is commonly seen in music sheets as the notation “<”")
+        print("You earned " + marks + " marks.")
 
-            earned_marks = get_marks(tries=tries, type=question["type"])
-            marks += earned_marks
-            print("Correct! " + question["message"])
-            print(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
-        else:
-            print("Hint: " + question["hint"])
+        print("Which of these represent mezzo-forte? (Choose from a, b, c or d)")
+        print("a) mp\nb) mf\nc) pp\nd) ff")
+        answer = input("Your answer: ")
+        tries += 1
 
-            answer = input("Enter your answer: ")
-            correct_places = 0
-            option_amount = len(question["answer"])
-
-            for i in range(option_amount):
-                if answer.split(", ")[i] == question["answer"][i]:
-                    correct_places += 1
-
-            earned_marks = get_marks(type=question["type"], correct_places=correct_places)
-            marks += earned_marks
-            print("Correct! " + question["message"])
-            print(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
+        while tries != "b":
+            if tries == 1:
+                print("The first letters of the 2 words are the acronyms.")
+                answer = input("Your answer: ")
+                tries += 1
+            else:
+                answer = input("Incorrect! Re-enter your answer: ")
+                tries += 1
+        
+        marks = get_marks(tries=tries, type="multichoice")
+        print("Correct! The mezzo-forte, is put as “mf” in music sheets and means to play it moderately loud.")
+        print("You earned " + marks + " marks.")
 
 def init():
     selection = input("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
 
-    while not selection in topic_list:
+    while not selection == "dynamics" or not selection == "speed and tempo" or not selection == "beats" or not selection == "time signature and clef":
         selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
 
-    topic = questions[topics[selection]]
-    run_questions(topic["questions"])
+    run_questions(selection)
 
     run_next = input(f"Would you like to do another topic? (y/n)\n")
     if run_next == "y" or run_next == "yes":

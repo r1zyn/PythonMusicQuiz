@@ -1,9 +1,12 @@
+#!/usr/bin/env python3
+
 questions = {
     "dynamics": {
         "questions": [
             {
                 "question": "What does a crescendo mean? (Choose from a, b, c or d)",
-                "options": "a) Getting louder\nb) Getting quiter\nc) Getting faster\nd) Getting slower",
+                "option_string": "a) Getting louder\nb) Getting quiter\nc) Getting faster\nd) Getting slower",
+                "options": ["a", "b", "c", "d"],
                 "answer": "a",
                 "hint": "It is similar to the english definition.",
                 "message": "Crescendo in music means to play gradually louder, the speed remains the same and is commonly seen in music sheets as the notation “<”",
@@ -11,7 +14,8 @@ questions = {
             },
             {
                 "question": "Which of these represent mezzo-forte? (Choose from a, b, c or d)",
-                "options": "a) mp\nb) mf\nc) pp\nd) ff",
+                "option_string": "a) mp\nb) mf\nc) pp\nd) ff",
+                "options": ["a", "b", "c", "d"],
                 "answer": "b",
                 "hint": "The first letters of the 2 words are the acronyms.",
                 "message": "The mezzo-forte, is put as “mf” in music sheets and means to play it moderately loud.",
@@ -19,7 +23,8 @@ questions = {
             },
             {
                 "question": "Forte is louder than mezzo-forte - true or false? (Choose from a or b)",
-                "options": "a) true\nb) false",
+                "option_string": "a) true\nb) false",
+                "options": ["a", "b"],
                 "answer": "a",
                 "hint": "Mezzo means moderately.",
                 "message": "Mezzo-forte is moderately loud, forte is just loud.",
@@ -27,7 +32,8 @@ questions = {
             },
             {
                 "question": "Mf and mp are equally loud - true or false? (Choose from a or b)",
-                "options": "a) true\nb) false",
+                "option_string": "a) true\nb) false",
+                "options": ["a", "b"],
                 "answer": "b",
                 "hint": "Mp means mezzo piano and mf means mezzo forte.",
                 "message": "No notation in music have the same degree of loudness.",
@@ -35,7 +41,7 @@ questions = {
             },
             {
                 "question": "Rank these from quietest to loudest: (in the format 1, 2, 3, 4)",
-                "options": "1) f\n2) mp\n3) ppp\n4) pp",
+                "option_string": "1) f\n2) mp\n3) ppp\n4) pp",
                 "answer": ["3", "4", "2", "1"],
                 "hint": "ppp just means it is more quieter than pp which is more quieter than p.",
                 "message": "ppp means pianississimo, pp means pianissimo, mp means mezzo-piano, f means fort",

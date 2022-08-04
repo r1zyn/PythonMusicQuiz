@@ -42,15 +42,15 @@ def run_questions(question_list):
         print("Options:\n" + question["options"])
 
         if question["type"] != "order":
-            answer = input("Enter your answer: ")
+            answer = input("Enter your answer: ").lower()
             tries += 1
 
-            while answer != question["answer"]:
+            while answer != question["answer"].lower():
                 if tries == 1:
                     print("Hint: " + question["hint"])
-                    answer = input("Enter your answer: ")
+                    answer = input("Enter your answer: ").lower()
                 else:
-                    answer = input("Incorrect! Re-enter your answer: ")
+                    answer = input("Incorrect! Re-enter your answer: ").lower()
 
                 tries += 1
 
@@ -61,7 +61,7 @@ def run_questions(question_list):
         else:
             print("Hint: " + question["hint"])
 
-            answer = input("Enter your answer: ")
+            answer = input("Enter your answer: ").lower()
             correct_places = 0
             option_amount = len(question["answer"])
 
@@ -75,15 +75,15 @@ def run_questions(question_list):
             print(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
 
 def init():
-    selection = input("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
+    selection = input("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
 
     while not selection in topic_list:
-        selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
+        selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
 
     topic = questions[topics[selection]]
     run_questions(topic["questions"])
 
-    run_next = input(f"Would you like to do another topic? (y/n)\n")
+    run_next = input(f"Would you like to do another topic? (y/n)\n").lower()
     if run_next == "y" or run_next == "yes":
         topic = init()
         run_questions(topic["questions"])
