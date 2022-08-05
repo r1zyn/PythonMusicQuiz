@@ -1,185 +1,110 @@
-from constants IMPORT questions, topics, topic_list
+FUNCTION  get_marks(tries<-0, type<-"", correct_places<-0):
+    IF type = "multichoice" or type = "word"
+        THEN
+        IF tries = 1
+            THEN
+            return 10
+        ENDIF
+        elif tries = 2:  
+            return 5
+        elif tries = 3: 
+            return 3
+        elif tries = 4:  
+            return 1
+        ELSE
+            return 0
+    ENDIF
+    elif type = "true/false": 
+        IF tries = 1
+            THEN
+            return 10
+        ENDIF
+        elif tries = 2: 
+            return 5
+        ELSE
+            return 0
+    elif type = "order": 
+        IF correct_places = 4
+            THEN
+            return 10
+        ENDIF
+        elif correct_places = 3:  
+            return 5
+        elif correct_places = 2:  
+            return 3
+        elif correct_places = 1: 
+            return 1
+        ELSE 
+            return 0
+ENDFUNCTION
 
+FUNCTION  run_questions(topic):
+    tries<-0
+    marks<-0
+ENDFUNCTION
 
+    IF topic = "dynamics"
+        THEN
+        OUTPUT "What does a crescendo mean? (Choose from a, b, c or d)"
+        OUTPUT "a Getting louder\nb Getting quiter\nc Getting faster\nd Getting slower"
+INPUT answer<-input("Your answer: ")
+        tries += 1
+    ENDIF
 
-SET marks TO 0
-
-
-
-SET def get_marks(tries TO 0, type TO "", correct_places TO 0):
-
-    IF type.lower() EQUALS "multichoice" or type.lower() EQUALS "word":
-
-        IF tries EQUALS 1:
-
-            RETURN 10
-
-        ELSEIF tries EQUALS 2:
-
-            RETURN 5
-
-        ELSEIF tries EQUALS 3:
-
-            RETURN 3
-
-        ELSEIF tries EQUALS 4:
-
-            RETURN 1
-
-        ELSE:
-
-            RETURN 0
-
-    ELSEIF type.lower() EQUALS "true/false":
-
-        IF tries EQUALS 1:
-
-            RETURN 10
-
-        ELSEIF tries EQUALS 2:
-
-            RETURN 5
-
-        ELSE:
-
-            RETURN 0
-
-    ELSEIF type.lower() EQUALS "order":
-
-        IF correct_places EQUALS 4:
-
-            RETURN 10
-
-        ELSEIF correct_places EQUALS 3:
-
-            RETURN 5
-
-        ELSEIF correct_places EQUALS 2:
-
-            RETURN 3
-
-        ELSEIF correct_places EQUALS 1:
-
-            RETURN 1
-
-        ELSE: 
-
-            RETURN 0
-
-
-
-DEFINE FUNCTION run_questions(question_list):
-
-    global marks
-
-    SET tries TO 0
-
-
-
-    FOR question IN question_list:
-
-        OUTPUT("Question: " + question["question"])
-
-        OUTPUT("Options:\n" + question["options"])
-
-
-
-        IF question["type"] != "order":
-
-            SET answer TO INPUT("Enter your answer: ")
-
-            tries += 1
-
-
-
-            WHILE answer != question["answer"]:
-
-                IF tries EQUALS 1:
-
-                    OUTPUT("Hint: " + question["hint"])
-
-                    SET answer TO INPUT("Enter your answer: ")
-
-                ELSE:
-
-                    SET answer TO INPUT("Incorrect! Re-enter your answer: ")
-
-
-
+        WHILE answer != "a" DO
+            IF tries = 1
+                THEN
+                OUTPUT "Hint: It is similar to the english definition."
+INPUT answer<-input("Your answer: ")
                 tries += 1
+            ELSE
+INPUT answer<-input("Incorrect! Re-enter your answer: ")
+                tries += 1
+            ENDIF
+        ENDWHILE
+        
+        marks +<- get_marks(tries<-tries, type<-"multichoice")
+        OUTPUT "Correct! Crescendo in music means to play gradually louder, the speed remains the same and is commonly seen in music sheets as the notation �<�"
 
+        OUTPUT "Which of these represent mezzo-forte? (Choose from a, b, c or d"
+        OUTPUT "a mp\nb mf\nc pp\nd ff"
+INPUT answer<-input("Your answer: ")
+        tries += 1
 
+        WHILE answer != "b" DO
+            IF tries = 1
+                THEN
+                OUTPUT "The first letters of the 2 words are the acronyms."
+INPUT answer<-input("Your answer: ")
+                tries += 1
+            ELSE
+INPUT answer<-input("Incorrect! Re-enter your answer: ")
+                tries += 1
+            ENDIF
+        ENDWHILE
+        
+        marks +<- get_marks(tries<-tries, type<-"multichoice")
+        OUTPUT "Correct! The mezzo-forte, is put as �mf� in music sheets and means to play it moderately loud."
 
-            SET earned_marks TO get_marks(tries=tries, type=question["type"])
+    return marks
 
-            marks += earned_marks
+PROCEDURE  init:
+ENDPROCEDURE
+INPUT selection<-input("Choose a topic: dynamics,speed and tempo, beats or time signature and clef\nYour selection: ")
 
-            OUTPUT("Correct! " + question["message"])
+    WHILE not selection = "dynamics" or not selection = "speed and tempo" or not selection = "beats" or not selection = "time signature and clef" DO
+INPUT selection<-input("Please choose a valid topic: ddynamics,speed and tempo, beats or time signature and clef\nYour selection: ")
+    ENDWHILE
 
-            OUTPUT(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
+    marks<-run_questions(selection)
 
-        ELSE:
-
-            OUTPUT("Hint: " + question["hint"])
-
-
-
-            SET answer TO INPUT("Enter your answer: ")
-
-            SET correct_places TO 0
-
-            SET option_amount TO len(question["answer"])
-
-
-
-            FOR i IN range(option_amount):
-
-                IF answer.split(", ")[i] EQUALS question["answer"][i]:
-
-                    correct_places += 1
-
-
-
-            SET earned_marks TO get_marks(type=question["type"], correct_places=correct_places)
-
-            marks += earned_marks
-
-            OUTPUT("Correct! " + question["message"])
-
-            OUTPUT(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
-
-
-
-DEFINE FUNCTION init():
-
-    SET selection TO INPUT("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
-
-
-
-    WHILE not selection IN topic_list:
-
-        SET selection TO INPUT("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
-
-
-
-    SET topic TO questions[topics[selection]]
-
-    run_questions(topic["questions"])
-
-
-
-    SET run_next TO INPUT(f"Would you like to do another topic? (y/n)\n")
-
-    IF run_next EQUALS "y" or run_next EQUALS "yes":
-
-        SET topic TO init()
-
-        run_questions(topic["questions"])
-
-    ELSE: 
-
-        OUTPUT(f"Cancelled topic selection. Thanks FOR playing! You earned a total of {marks} marks.")
-
-
+INPUT run_next<-input(f"Would you like to do another topic? (y/n)\n")
+    IF run_next = "y" or run_next = "yes"
+        THEN
+        topic<-init()
+        marks<-run_questions(topic["questions"])
+    ELSE 
+        OUTPUT f"Cancelled topic selection. Thanks FOR playing! You earned a total of {marks} marks."  //Pseudocode can't handle this
+    ENDIF
 
 init()

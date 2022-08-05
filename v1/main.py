@@ -1,5 +1,3 @@
-marks = 0
-
 def get_marks(tries = 0, type = "", correct_places = 0):
     if type == "multichoice" or type == "word":
         if tries == 1:
@@ -33,6 +31,7 @@ def get_marks(tries = 0, type = "", correct_places = 0):
 
 def run_questions(topic):
     tries = 0
+    marks = 0
 
     if topic == "dynamics":
         print("What does a crescendo mean? (Choose from a, b, c or d)")
@@ -49,7 +48,7 @@ def run_questions(topic):
                 answer = input("Incorrect! Re-enter your answer: ")
                 tries += 1
         
-        marks = get_marks(tries=tries, type="multichoice")
+        marks += get_marks(tries=tries, type="multichoice")
         print("Correct! Crescendo in music means to play gradually louder, the speed remains the same and is commonly seen in music sheets as the notation “<”")
 
         print("Which of these represent mezzo-forte? (Choose from a, b, c or d)")
@@ -66,8 +65,10 @@ def run_questions(topic):
                 answer = input("Incorrect! Re-enter your answer: ")
                 tries += 1
         
-        marks = get_marks(tries=tries, type="multichoice")
+        marks += get_marks(tries=tries, type="multichoice")
         print("Correct! The mezzo-forte, is put as “mf” in music sheets and means to play it moderately loud.")
+
+    return marks
 
 def init():
     selection = input("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
@@ -75,12 +76,12 @@ def init():
     while not selection == "dynamics" or not selection == "speed and tempo" or not selection == "beats" or not selection == "time signature and clef":
         selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
 
-    run_questions(selection)
+    marks = run_questions(selection)
 
-    run_next = input(f"Would you like to do another topic? (y/n)\n")
+    run_next = input("Would you like to do another topic? (y/n)\n")
     if run_next == "y" or run_next == "yes":
         topic = init()
-        run_questions(topic["questions"])
+        marks = run_questions(topic["questions"])
     else: 
         print(f"Cancelled topic selection. Thanks for playing! You earned a total of {marks} marks.")
 
