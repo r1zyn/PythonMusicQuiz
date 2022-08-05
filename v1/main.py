@@ -40,7 +40,7 @@ def run_questions(topic):
         answer = input("Your answer: ")
         tries += 1
 
-        while tries != "a":
+        while answer != "a":
             if tries == 1:
                 print("Hint: It is similar to the english definition.")
                 answer = input("Your answer: ")
@@ -51,14 +51,13 @@ def run_questions(topic):
         
         marks = get_marks(tries=tries, type="multichoice")
         print("Correct! Crescendo in music means to play gradually louder, the speed remains the same and is commonly seen in music sheets as the notation “<”")
-        print("You earned " + marks + " marks.")
 
         print("Which of these represent mezzo-forte? (Choose from a, b, c or d)")
         print("a) mp\nb) mf\nc) pp\nd) ff")
         answer = input("Your answer: ")
         tries += 1
 
-        while tries != "b":
+        while answer != "b":
             if tries == 1:
                 print("The first letters of the 2 words are the acronyms.")
                 answer = input("Your answer: ")
@@ -69,7 +68,6 @@ def run_questions(topic):
         
         marks = get_marks(tries=tries, type="multichoice")
         print("Correct! The mezzo-forte, is put as “mf” in music sheets and means to play it moderately loud.")
-        print("You earned " + marks + " marks.")
 
 def init():
     selection = input("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")

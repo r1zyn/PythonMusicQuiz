@@ -44,7 +44,7 @@ questions = {
                 "option_string": "1) f\n2) mp\n3) ppp\n4) pp",
                 "answer": ["3", "4", "2", "1"],
                 "hint": "ppp just means it is more quieter than pp which is more quieter than p.",
-                "message": "ppp means pianississimo, pp means pianissimo, mp means mezzo-piano, f means fort",
+                "message": "ppp means pianississimo, pp means pianissimo, mp means mezzo-piano, f means fort.",
                 "type": "order"
             }
         ]
@@ -77,7 +77,8 @@ topic_list = [
     "dynamics",
     "speed and tempo",
     "beats",
-    "time signature and clef"
+    "time signature and clef",
+    "all"
 ]
 """
 List of topics for the user to choose from.

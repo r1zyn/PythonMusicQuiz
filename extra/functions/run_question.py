@@ -61,7 +61,7 @@ def run_question(question) -> int:
         
         answer: str = input("Enter your answer: ").lower()
         correct_places: int = 0
-        matches: re.Match = re.search("^(\d\,\s)+\d$", answer)
+        matches: re.Match = re.search("^(\d\,\s){4}\d$", answer)
 
         while not matches:
             answer: str = input("Please provide a valid answer: ").lower()
