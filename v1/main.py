@@ -72,10 +72,6 @@ def run_questions(topic):
 
 def init():
     selection = input("Choose a topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
-
-    while not selection == "dynamics" or not selection == "speed and tempo" or not selection == "beats" or not selection == "time signature and clef":
-        selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
-
     marks = run_questions(selection)
 
     run_next = input("Would you like to do another topic? (y/n)\n")

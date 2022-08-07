@@ -92,7 +92,7 @@ PROCEDURE  init:
 ENDPROCEDURE
 INPUT selection<-input("Choose a topic: dynamics,speed and tempo, beats or time signature and clef\nYour selection: ")
 
-    WHILE not selection = "dynamics" or not selection = "speed and tempo" or not selection = "beats" or not selection = "time signature and clef" DO
+    WHILE not selection = "dynamics" or selection = "speed and tempo" or selection = "beats" or selection = "time signature and clef" DO
 INPUT selection<-input("Please choose a valid topic: ddynamics,speed and tempo, beats or time signature and clef\nYour selection: ")
     ENDWHILE
 

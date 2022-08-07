@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Python: Run Program",
-            "command": "python ${workspaceFolder}/main.py",
+            "command": "python ${workspaceFolder}/v4/main.py",
             "type": "shell"
         }
     ]
