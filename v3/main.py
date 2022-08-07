@@ -37,7 +37,7 @@ def get_marks(tries: int = 0, type: str = "", correct_places: int = 0) -> int:
 def run_questions(question_list: dict[str, Any]) -> int:
     marks: int = 0
     tries: int = 0
-
+    
     for question in question_list:
         print("Question: " + question["question"])
 
