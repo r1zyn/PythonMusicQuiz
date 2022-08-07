@@ -1,0 +1,220 @@
+from time import sleep
+DECLARE run_next:str<-input( : STRING
+DECLARE selection<-input( : STRING
+DECLARE selection:str<-input( : STRING
+DECLARE selection:str<-input( : STRING
+DECLARE answer:str<-input( : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower() : STRING
+DECLARE answer:str<-input( : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower() : STRING
+DECLARE answer:str<-input( : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower() : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower() : STRING
+DECLARE answer:str<-input( : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower() : STRING
+from typing import Any, Union
+from constants import questions, topics, topic_list
+from re import Match, search
+
+
+FUNCTION  get_marks(tries: int<-0, type: str<-"", correct_places: int<-0) -> int:
+    RETURNS // What gets sent back?
+    IF type.lower() = "multichoice" or type.lower() = "word"
+        THEN
+        IF tries = 1
+            THEN
+            return 10
+        ENDIF
+        elif tries = 2:
+            return 5
+        elif tries = 3:
+            return 3
+        elif tries = 4:
+            return 1
+        ELSE
+            return 0
+    ENDIF
+    elif type.lower() = "true/false":
+        IF tries = 1
+            THEN
+            return 10
+        ENDIF
+        elif tries = 2:
+            return 5
+        ELSE
+            return 0
+    elif type.lower() = "order":
+        IF correct_places = 4
+            THEN
+            return 10
+        ENDIF
+        elif correct_places = 3:
+            return 5
+        elif correct_places = 2:
+            return 3
+        elif correct_places = 1:
+            return 1
+        ELSE
+            return 0
+ENDFUNCTION
+
+
+FUNCTION  run_questions(question_list: dict[str, Any]) -> int:
+    RETURNS // What gets sent back?
+    marks: int<-0
+    tries: int<-0
+ENDFUNCTION
+
+    FOR question in question_list:
+        OUTPUT "Question: " + question["question"]
+
+        IF question["type"] = "order"
+            THEN
+            OUTPUT "Options:\n" + question["option_string"]
+            OUTPUT "Hint: " + question["hint"]
+        ENDIF
+
+INPUT answer:str<-input("Enteryouranswer:").lower()
+            correct_places: int<-0
+            option_amount: int<-len(question["answer"])
+            matches: Union[Match[str], None]<-search(
+                "^(\d\,\s){3}\d$", answer)
+
+            WHILE matches = None DO
+                tries += 1
+INPUT answer:str<-input(
+                    "Invalid format, please try again: ").lower()
+            ENDWHILE
+
+            FOR i in range(option_amount):
+                IF answer.split(", ")[i] = question["answer"][i]
+                    THEN
+                    correct_places += 1
+                ENDIF
+
+            earned_marks: int<-get_marks(
+                type<-question["type"], correct_places<-correct_places)
+            marks += earned_marks
+            OUTPUT "You completed the question with " +
+                  str(correct_places) + " correct places. " + question["message"])
+            OUTPUT "You earned a total of " + earned_marks +
+                  " marks. You now have " + marks + "marks from the topic.")
+        elif question["type"] = "word":
+INPUT answer:str<-input("Enteryouranswer:").lower()
+
+            tries += 1
+
+            WHILE answer != question["answer"].lower() DO
+                IF tries = 1
+                    THEN
+                    OUTPUT "Hint: " + question["hint"]
+INPUT answer:str<-input("Enteryouranswer:").lower()
+                ELSE
+INPUT answer:str<-input(
+                        "Incorrect! Re-enter your answer: ").lower()
+                ENDIF
+            ENDWHILE
+
+                tries += 1
+
+            earned_marks: int<-get_marks(tries=tries, type=question["type"])
+            marks += earned_marks
+            OUTPUT "Correct! " + question["message"]
+            OUTPUT 
+                "You earned a total of " + earned_marks + " marks. You now have " + marks + "marks from the topic.")
+        ELSE
+            OUTPUT "Options:\n" + question["option_string"]
+INPUT answer:str<-input("Enteryouranswer:").lower()
+
+            WHILE not answer in question["options"] DO
+                tries += 1
+INPUT answer:str<-input(
+                    "Invalid answer, please try again: ").lower()
+            ENDWHILE
+
+            tries += 1
+
+            WHILE answer != question["answer"].lower() DO
+                IF tries = 1
+                    THEN
+                    OUTPUT "Hint: " + question["hint"]
+INPUT answer:str<-input("Enteryouranswer:").lower()
+                ELSE
+INPUT answer:str<-input(
+                        "Incorrect! Re-enter your answer: ").lower()
+                ENDIF
+            ENDWHILE
+
+                tries += 1
+
+            earned_marks: str<-get_marks(tries=tries, type=question["type"])
+            marks += earned_marks
+            OUTPUT "Correct! " + question["message"]
+            OUTPUT 
+                "You earned a total of " + earned_marks + " marks. You now have " + marks + "marks from the topic.")
+
+        tries: int<-0
+        sleep(2)
+
+    return marks
+
+
+FUNCTION  run_selection(all: bool<-True) -> None:
+    RETURNS // What gets sent back?
+    IF all
+        THEN
+ENDFUNCTION
+INPUT selection:str<-input(
+            "Choose a topic: dynamics, speed and tempo, beats, time signature and clef or all\nYour selection: ").lower()
+    ELSE
+INPUT selection:str<-input(
+            "Choose a topic: dynamics, speed and tempo, beats or time signature, clef\nYour selection: ").lower()
+        topic_list.pop()
+    ENDIF
+
+    WHILE not selection in topic_list DO
+INPUT selection<-input(
+            "Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
+    ENDWHILE
+
+    marks: int<-0
+
+    IF selection = "all" or all
+        THEN
+        FOR topic in questions.values():
+            marks += run_questions(topic["questions"])
+    ENDIF
+
+        OUTPUT "Thanks FOR playing! You earned a total of " + marks + " marks."
+    ELSE
+        topic: str<-questions[topics[selection]]
+        marks: int<-run_questions(topic["questions"])
+        OUTPUT "Thanks FOR playing! You earned a total of " + marks + " marks."
+
+INPUT run_next:str<-input(
+        "Would you like to do another topic? (y/n)\n").lower()
+    IF run_next = "y" or run_next = "yes"
+        THEN
+        run_selection(all=False)
+    ELSE
+        exit(0)
+    ENDIF
+
+
+FUNCTION  init() -> None:
+    RETURNS // What gets sent back?
+    OUTPUT "-----------[ Python Music Quiz ]-----------"
+    OUTPUT "Welcome to the Python music quiz! This is a music quiz written in Python to help you user prepare FOR music theories ranging from 4 different topics:"
+    OUTPUT " » Dynamics\n » Speed and tempo\n » Beats\n » Time signature and clef\n"
+    OUTPUT "You will receive a variety of type of questions in each topic: "
+    OUTPUT " » Multiple choice questions\n   1st try: 10 marks\n   2nd try: 5 marks\n   3rd try: 3 marks\n   4th try: 1 mark\n"
+    OUTPUT " » Word questions\n   1st try: 10 marks\n   2nd try: 5 marks\n   3rd try: 3 marks\n   4th try: 1 mark\n"
+    OUTPUT " » True/False questions\n   1st try: 10 marks\n   2nd try: 1 mark\n"
+    OUTPUT " » Order questions\n   4 correct places: 10 marks\n   3 correct places: 5 marks\n   2 correct places: 3 marks\n   1 correct place: 1 mark\n"
+    OUTPUT "You will receive one hint after your first try FOR every question."
+ENDFUNCTION
+
+    run_selection()
+
+
+init()

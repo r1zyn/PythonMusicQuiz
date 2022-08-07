@@ -1,53 +1,63 @@
 FUNCTION  get_marks(tries<-0, type<-"", correct_places<-0):
+RETURNS // What gets sent back?
+ENDFUNCTION
+DECLARE run_next<-input("Wouldyouliketodoanothertopic?(y/n)\n") : STRING
+DECLARE selection<-input("Chooseatopic:dynamics,speedandtempo,beatsortimesignatureandclef\nYourselection:") : STRING
+DECLARE answer<-input("Incorrect!Re-enteryouranswer:") : STRING
+DECLARE answer<-input("Youranswer:") : STRING
+DECLARE answer<-input("Youranswer:") : STRING
+DECLARE answer<-input("Incorrect!Re-enteryouranswer:") : STRING
+DECLARE answer<-input("Youranswer:") : STRING
+DECLARE answer<-input("Youranswer:") : STRING
     IF type = "multichoice" or type = "word"
         THEN
         IF tries = 1
             THEN
             return 10
         ENDIF
-        elif tries = 2:  
+        elif tries = 2:
             return 5
-        elif tries = 3: 
+        elif tries = 3:
             return 3
-        elif tries = 4:  
+        elif tries = 4:
             return 1
         ELSE
             return 0
     ENDIF
-    elif type = "true/false": 
+    elif type = "true/false":
         IF tries = 1
             THEN
             return 10
         ENDIF
-        elif tries = 2: 
+        elif tries = 2:
             return 5
         ELSE
             return 0
-    elif type = "order": 
+    elif type = "order":
         IF correct_places = 4
             THEN
             return 10
         ENDIF
-        elif correct_places = 3:  
+        elif correct_places = 3:
             return 5
-        elif correct_places = 2:  
+        elif correct_places = 2:
             return 3
-        elif correct_places = 1: 
+        elif correct_places = 1:
             return 1
         ELSE 
             return 0
-ENDFUNCTION
 
 FUNCTION  run_questions(topic):
+    RETURNS // What gets sent back?
     tries<-0
     marks<-0
 ENDFUNCTION
 
     IF topic = "dynamics"
         THEN
-        OUTPUT "What does a crescendo mean? (Choose from a, b, c or d)"
+        OUTPUT "What does a crescendo mean? (Choose from a, b, c or d"
         OUTPUT "a Getting louder\nb Getting quiter\nc Getting faster\nd Getting slower"
-INPUT answer<-input("Your answer: ")
+INPUT answer<-input("Youranswer:")
         tries += 1
     ENDIF
 
@@ -55,56 +65,51 @@ INPUT answer<-input("Your answer: ")
             IF tries = 1
                 THEN
                 OUTPUT "Hint: It is similar to the english definition."
-INPUT answer<-input("Your answer: ")
+INPUT answer<-input("Youranswer:")
                 tries += 1
             ELSE
-INPUT answer<-input("Incorrect! Re-enter your answer: ")
+INPUT answer<-input("Incorrect!Re-enteryouranswer:")
                 tries += 1
             ENDIF
         ENDWHILE
         
         marks +<- get_marks(tries<-tries, type<-"multichoice")
-        OUTPUT "Correct! Crescendo in music means to play gradually louder, the speed remains the same and is commonly seen in music sheets as the notation ï¿½<ï¿½"
+        OUTPUT "Correct! Crescendo in music means to play gradually louder, the speed remains the same and is commonly seen in music sheets as the notation “<”"
 
         OUTPUT "Which of these represent mezzo-forte? (Choose from a, b, c or d"
         OUTPUT "a mp\nb mf\nc pp\nd ff"
-INPUT answer<-input("Your answer: ")
+INPUT answer<-input("Youranswer:")
         tries += 1
 
         WHILE answer != "b" DO
             IF tries = 1
                 THEN
                 OUTPUT "The first letters of the 2 words are the acronyms."
-INPUT answer<-input("Your answer: ")
+INPUT answer<-input("Youranswer:")
                 tries += 1
             ELSE
-INPUT answer<-input("Incorrect! Re-enter your answer: ")
+INPUT answer<-input("Incorrect!Re-enteryouranswer:")
                 tries += 1
             ENDIF
         ENDWHILE
         
         marks +<- get_marks(tries<-tries, type<-"multichoice")
-        OUTPUT "Correct! The mezzo-forte, is put as ï¿½mfï¿½ in music sheets and means to play it moderately loud."
+        OUTPUT "Correct! The mezzo-forte, is put as “mf” in music sheets and means to play it moderately loud."
 
     return marks
 
 PROCEDURE  init:
 ENDPROCEDURE
-INPUT selection<-input("Choose a topic: dynamics,speed and tempo, beats or time signature and clef\nYour selection: ")
-
-    WHILE not selection = "dynamics" or selection = "speed and tempo" or selection = "beats" or selection = "time signature and clef" DO
-INPUT selection<-input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
-    ENDWHILE
-
+INPUT selection<-input("Chooseatopic:dynamics,speedandtempo,beatsortimesignatureandclef\nYourselection:")
     marks<-run_questions(selection)
 
-INPUT run_next<-input(f"Would you like to do another topic? (y/n)\n")
+INPUT run_next<-input("Wouldyouliketodoanothertopic?(y/n)\n")
     IF run_next = "y" or run_next = "yes"
         THEN
         topic<-init()
         marks<-run_questions(topic["questions"])
     ELSE 
-        OUTPUT f"Cancelled topic selection. Thanks FOR playing! You earned a total of {marks} marks."  //Pseudocode can't handle this
+        OUTPUT "Cancelled topic selection. Thanks FOR playing! You earned a total of " + marks + "marks."
     ENDIF
 
 init()

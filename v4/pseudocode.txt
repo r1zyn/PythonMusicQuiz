@@ -1,0 +1,231 @@
+from time import sleep // Import sleep function to create delays between each question
+DECLARE run_nextstr<-input("Wouldyouliketodoanothertopic?(y/n)\n").lower()//AskstheuserIFtheywanttocontinue : STRING
+DECLARE selection<-input("Pleasechooseavalidtopic:dynamics,speedandtempo,beats,timesignatureandcleforall\nYourselection:").lower()//Promptthemtore-entertheiranswer : STRING
+DECLARE selection:str<-input("Chooseatopic:dynamics,speedandtempo,beats,timesignatureandcleforall\nYourselection:").lower()//Theuser'stopicselection : STRING
+DECLARE Initiatesthequizbyaskingausertoinputaquiztopic,thenrunsthequestionFORthegiventopic. : STRING
+DECLARE answer:str<-input("Incorrect!Re-enteryouranswer:").lower()//Otherwise,askFORanotheranswer : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower()//Recollecttheiranswer : STRING
+DECLARE answer:str<-input("Invalidanswer,pleasetryagain:").lower()//Promptthemtore-entertheiranswer : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower()//Theuser'sinput : STRING
+DECLARE answer:str<-input("Incorrect!Re-enteryouranswer:").lower()//Otherwise,askFORanotheranswer : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower()//Recollecttheiranswer : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower()//Theuser'sinput : STRING
+DECLARE answer:str<-input("Invalidanswer,pleasetryagain:").lower()//Whiletheuser'sdoesnotincludethevaluesintheanswer,promptthemtore-enterit : STRING
+DECLARE answer:str<-input("Invalidformat,pleasetryagain:").lower()//Whiletheuser'sanswerisinaninvalidformat,promptthemtore-enterit : STRING
+DECLARE answer:str<-input("Enteryouranswer:").lower()//Theuser'sinput : STRING
+from typing import Any, Union // Import Union type to support union types, Any to support any type
+from constants import questions, topics, topic_list // Importt constants
+from re import search, Match // Import regex search function and Match type
+
+// Function to return the number of marks earned from a question
+FUNCTION  get_marks(tries: int<-0, type: str<-"", correct_places: int<-0) -> int: 
+    RETURNS // What gets sent back?
+    """
+    Calculates the number of marks received FOR a question.
+    """
+ENDFUNCTION
+
+    IF type.lower() = "multichoice" or type.lower() = "word" // If the question type is a multiple choice or word question
+        THEN
+        IF tries = 1
+            THEN
+            return 10 // If the user gets the question right on the first try, return 10 marks
+        ENDIF
+        elif tries = 2:
+            return 5 // If the user gets the question right on the second try, return 5 marks
+        elif tries = 3:
+            return 3 // If the user gets the question right on the third try, return 3 marks
+        elif tries = 4:
+            return 1 // If the user gets the question right on the fourth try, return 1 mark
+        ELSE 
+            return 0 // Otherwise, return 0 marks
+    ENDIF
+    elif type.lower() = "true/false": // If the question type is a true/false question
+        IF tries = 1
+            THEN
+            return 10 // If the user gets the question right on the first try, return 10 marks
+        ENDIF
+        elif tries = 2:
+            return 1 // If the user gets the question right on the second try, return 1 mark
+        ELSE
+            return 0
+    elif type.lower() = "order": // If the question type is an order question
+        IF correct_places = 4
+            THEN
+            return 10 // If the user gets 4 places correct, return 10 marks
+        ENDIF
+        elif correct_places = 3:
+            return 5 // If the user gets 3 places correct, return 5 marks
+        elif correct_places = 2:
+            return 3 // If the user gets 2 places correct, return 3 marks
+        elif correct_places = 1:
+            return 1 // If the user gets 1 place correct, return 1 mark
+        ELSE 
+            return 0 // Otherwise, return 0 marks
+
+// Function to run the questions in a provided question list
+FUNCTION  run_questions(question_list: dict[str, Any]) -> int: 
+    RETURNS // What gets sent back?
+    """
+    Runs the questions from the question list from the topic the user selected.
+    """
+ENDFUNCTION
+
+    marks: int<-0 // Total number of marks earned from the list
+    tries: int<-0 // Number of tries FOR a question
+
+    FOR question in question_list: // Iterate through each question dict in the question list
+        OUTPUT "Question: " + question["question"] // Prints the question
+
+        IF question["type"] = "order" // If the question type is an order question
+            THEN
+            OUTPUT "Options:\n" + question["option_string"] // Prints the options
+            OUTPUT "Hint: " + question["hint"] // Prints the hint FOR the question
+        ENDIF
+
+INPUT answer:str<-input("Enteryouranswer:").lower()//Theuser'sinput
+            correct_places: int<-0 // Number of correct places the user gets in the ordering right
+            option_amount: int<-len(question["answer"]) // The number of options available FOR ordering
+            matches: Union[Match[str], None]<-search("^(\d\,\s){3}\d$", answer) // Regex matches to ensure their answer is propery formatted
+
+            // Regex breakdown for: ^(\d\,\s){3}\d$  //This might be better as a repeat loop
+            // ^ Represents the start of the searching string
+            // (\d\,\s) is a group where \d represents any digit, \, represents a command and \s represents a whitespace character
+            // {3} means to search FOR 3 of the group
+            // \d represents a single digit after the replicated group
+            // $ represents the end of the searching string
+
+            WHILE matches = None // Check IF no matches in the answer FOR the required FORmat is found
+                THEN
+INPUT answer:str<-input("Invalidformat,pleasetryagain:").lower()//Whiletheuser'sanswerisinaninvalidformat,promptthemtore-enterit
+            ENDWHILE
+            ENDIF
+
+            WHILE not all(item in answer.split(", ") FOR item in question["answer"]) DO // Compares the values in the answer list to the user's answer
+INPUT answer:str<-input("Invalidanswer,pleasetryagain:").lower()//Whiletheuser'sdoesnotincludethevaluesintheanswer,promptthemtore-enterit
+            ENDWHILE
+
+            FOR i in range(option_amount): // Iterate through each value in the answer
+                IF answer.split(", ")[i] = question["answer"][i] // Checks IF the value is in the correct place
+                    THEN
+                    correct_places += 1 // Increase the number of correct places by 1
+                ENDIF
+
+            earned_marks: int<-get_marks(type=question["type"], correct_places=correct_places) // Returns the number of marks based on the correct places (FOR ordering question)
+            marks += earned_marks // Append the new marks to the existing total of marks
+            OUTPUT "You completed the question with " + str(correct_places + " correct places. " + question["message"] // Prints the number of correct places the user got and the message FOR the question 
+            OUTPUT "You earned a total of " +  earned_marks + "marks. You now have " + marks + " marks from the topic." // Prints the number of marks the user earned and the total number of marks
+        elif question["type"] = "word": // If the question type is a word question
+INPUT answer:str<-input("Enteryouranswer:").lower()//Theuser'sinput
+
+            tries += 1 // Increase the number of tries by 1
+
+            WHILE answer != question["answer"].lower() DO // While the user's answer is not the correct answer
+                IF tries = 1 // If the user is on their first try
+                    THEN
+                    OUTPUT "Hint: " + question["hint"] // Print the hint FOR the question
+INPUT answer:str<-input("Enteryouranswer:").lower()//Recollecttheiranswer
+                ELSE
+INPUT answer:str<-input("Incorrect!Re-enteryouranswer:").lower()//Otherwise,askFORanotheranswer
+                ENDIF
+            ENDWHILE
+
+                tries += 1 // Each time the answer is incorrect, increase the number of tries by 1
+
+            earned_marks: int<-get_marks(tries=tries, type=question["type"]) // Returns the number of marks based on the number of tries
+            marks += earned_marks // Append the new marks to the existing total of marks
+            OUTPUT "Correct! " + question["message"] // Prints the message FOR the question
+            OUTPUT "You earned a total of " +  earned_marks + "marks. You now have " + marks + " marks from the topic." // Prints the number of marks the user earned and the total number of marks
+        ELSE // If the question type is a multiple choice or true/false question
+            OUTPUT "Options:\n" + question["option_string"] // Prints the options
+INPUT answer:str<-input("Enteryouranswer:").lower()//Theuser'sinput
+
+            WHILE not answer in question["options"] DO // While the user's answer is not one of the options
+INPUT answer:str<-input("Invalidanswer,pleasetryagain:").lower()//Promptthemtore-entertheiranswer
+            ENDWHILE
+
+            tries += 1 // Increase the number of tries by 1
+
+            WHILE answer != question["answer"].lower() DO // While the user's answer is not the correct answer
+                IF tries = 1 // If the user is on their first try
+                    THEN
+                    OUTPUT "Hint: " + question["hint"] // Print the hint FOR the question
+INPUT answer:str<-input("Enteryouranswer:").lower()//Recollecttheiranswer
+                ELSE 
+INPUT answer:str<-input("Incorrect!Re-enteryouranswer:").lower()//Otherwise,askFORanotheranswer
+                ENDIF
+            ENDWHILE
+
+                tries += 1 // Each time the answer is incorrect, increase the number of tries by 1
+
+            earned_marks: int<-get_marks(tries=tries, type=question["type"]) // Returns the number of marks based on the number of tries
+            marks += earned_marks // Append the new marks to the existing total of marks
+            OUTPUT "Correct! " + question["message"] // Prints the message FOR the question
+            OUTPUT "You earned a total of " +  earned_marks + "marks. You now have " + marks + " marks from the topic." // Prints the number of marks the user earned and the total number of marks
+
+        tries: int<-0  // Reset the number of tries FOR the next question
+        sleep(2) // Pause the program FOR 2 seconds
+
+    return marks // Return the total number of marks the user earned
+
+FUNCTION  run_selection() -> None:
+    RETURNS // What gets sent back?
+    """
+ENDFUNCTION
+INPUT Initiatesthequizbyaskingausertoinputaquiztopic,thenrunsthequestionFORthegiventopic.
+    Gives the user to continue with other topics once they have completed a topic.
+    """
+
+INPUT selection:str<-input("Chooseatopic:dynamics,speedandtempo,beats,timesignatureandcleforall\nYourselection:").lower()//Theuser'stopicselection
+
+    WHILE not selection in topic_list // Checks IF the user's selection is valid
+        THEN
+INPUT selection<-input("Pleasechooseavalidtopic:dynamics,speedandtempo,beats,timesignatureandcleforall\nYourselection:").lower()//Promptthemtore-entertheiranswer
+    ENDWHILE
+    ENDIF
+
+    marks: int<-0 // Initiate marks variable
+
+    IF selection = "all" // Checks IF the user wants to run all topics
+        THEN
+        FOR topic in questions.values(): // Iterates through each topic
+            marks += run_questions(topic["questions"]) // Runs the questions in each topic and append the number of received marks to the marks variable
+    ENDIF
+
+        OUTPUT "Thanks FOR playing! You earned a total of " + marks + " marks." // Prints a message thanking the user FOR playing, and displays the total number of marks they earned
+    ELSE
+        topic: str<-questions[topics[selection]] // Gets the topic 
+        marks: int<-run_questions(topic["questions"]) // Otherwise, runs the questions FOR the selected topic and appends the number of received marks to the marks variable
+        OUTPUT "Thanks FOR playing! You earned a total of " + marks + " marks." // Prints a message thanking the user FOR playing, and displays the total number of marks they earned
+
+INPUT run_nextstr<-input("Wouldyouliketodoanothertopic?(y/n)\n").lower()//AskstheuserIFtheywanttocontinue
+    THEN
+    ENDIF
+    IF run_next = "y" or run_next = "yes"
+        THEN
+        run_selection() // If they choose yes, run the selection process again
+    ELSE 
+        exit(0) // Otherwise, exit the program with code 0 (success code)
+    ENDIF
+
+FUNCTION  init() -> None:
+    RETURNS // What gets sent back?
+    """
+    Function to initialise the program - introduces the quiz and explains how it works, then runs the actual quiz itself.
+    """
+ENDFUNCTION
+
+    OUTPUT "-----------[ Python Music Quiz ]-----------"
+    OUTPUT "Welcome to the Python music quiz! This is a music quiz written in Python to help you user prepare FOR music theories ranging from 4 different topics:" // Introduces the quiz
+    OUTPUT " » Dynamics\n » Speed and tempo\n » Beats\n » Time signature and clef\n" // Displays the available quiz topics
+    OUTPUT "You will receive a variety of type of questions in each topic: " // Talks about the types of questions and the available marks FOR each type 
+    OUTPUT " » Multiple choice questions\n   1st try: 10 marks\n   2nd try: 5 marks\n   3rd try: 3 marks\n   4th try: 1 mark\n"
+    OUTPUT " » Word questions\n   1st try: 10 marks\n   2nd try: 5 marks\n   3rd try: 3 marks\n   4th try: 1 mark\n"
+    OUTPUT " » True/False questions\n   1st try: 10 marks\n   2nd try: 1 mark\n"
+    OUTPUT " » Order questions\n   4 correct places: 10 marks\n   3 correct places: 5 marks\n   2 correct places: 3 marks\n   1 correct place: 1 mark\n"
+    OUTPUT "You will receive one hint after your first try FOR every question." // Talks about hints
+    OUTPUT "Note: there will be 2 second delay after every question." // Notifies user 2 second delays will occur, as user may be think there is an issue with the program when it unexpected pauses FOR 2 seconds
+
+    run_selection() // Begins the actual quiz 
+
+init() // Runs the program

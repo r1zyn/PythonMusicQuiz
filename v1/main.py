@@ -79,6 +79,6 @@ def init():
         topic = init()
         marks = run_questions(topic["questions"])
     else: 
-        print(f"Cancelled topic selection. Thanks for playing! You earned a total of {marks} marks.")
+        print("Cancelled topic selection. Thanks for playing! You earned a total of " + marks + "marks.")
 
 init()

@@ -80,7 +80,7 @@ def run_questions(question_list: dict[str, Any]) -> int:
             earned_marks: int = get_marks(type=question["type"], correct_places=correct_places) # Returns the number of marks based on the correct places (for ordering question)
             marks += earned_marks # Append the new marks to the existing total of marks
             print("You completed the question with " + str(correct_places) + " correct places. " + question["message"]) # Prints the number of correct places the user got and the message for the question 
-            print(f"You earned a total of {earned_marks} marks. You now have {marks} marks from the topic.") # Prints the number of marks the user earned and the total number of marks
+            print("You earned a total of " +  earned_marks + "marks. You now have " + marks + " marks from the topic.") # Prints the number of marks the user earned and the total number of marks
         elif question["type"] == "word": # If the question type is a word question
             answer: str = input("Enter your answer: ").lower() # The user's input
 
@@ -98,7 +98,7 @@ def run_questions(question_list: dict[str, Any]) -> int:
             earned_marks: int = get_marks(tries=tries, type=question["type"]) # Returns the number of marks based on the number of tries
             marks += earned_marks # Append the new marks to the existing total of marks
             print("Correct! " + question["message"]) # Prints the message for the question
-            print(f"You earned a total of {earned_marks} marks. You now have {marks} marks from the topic.") # Prints the number of marks the user earned and the total number of marks
+            print("You earned a total of " +  earned_marks + "marks. You now have " + marks + " marks from the topic.") # Prints the number of marks the user earned and the total number of marks
         else: # If the question type is a multiple choice or true/false question
             print("Options:\n" + question["option_string"]) # Prints the options
             answer: str = input("Enter your answer: ").lower() # The user's input
@@ -120,7 +120,7 @@ def run_questions(question_list: dict[str, Any]) -> int:
             earned_marks: int = get_marks(tries=tries, type=question["type"]) # Returns the number of marks based on the number of tries
             marks += earned_marks # Append the new marks to the existing total of marks
             print("Correct! " + question["message"]) # Prints the message for the question
-            print(f"You earned a total of {earned_marks} marks. You now have {marks} marks from the topic.") # Prints the number of marks the user earned and the total number of marks
+            print("You earned a total of " +  earned_marks + "marks. You now have " + marks + " marks from the topic.") # Prints the number of marks the user earned and the total number of marks
 
         tries: int = 0  # Reset the number of tries for the next question
         sleep(2) # Pause the program for 2 seconds
@@ -144,13 +144,13 @@ def run_selection() -> None:
         for topic in questions.values(): # Iterates through each topic
             marks += run_questions(topic["questions"]) # Runs the questions in each topic and append the number of received marks to the marks variable
 
-        print(f"Thanks for playing! You earned a total of {marks} marks.") # Prints a message thanking the user for playing, and displays the total number of marks they earned
+        print("Thanks for playing! You earned a total of " + marks + " marks.") # Prints a message thanking the user for playing, and displays the total number of marks they earned
     else:
         topic: str = questions[topics[selection]] # Gets the topic 
         marks: int = run_questions(topic["questions"]) # Otherwise, runs the questions for the selected topic and appends the number of received marks to the marks variable
-        print(f"Thanks for playing! You earned a total of {marks} marks.") # Prints a message thanking the user for playing, and displays the total number of marks they earned
+        print("Thanks for playing! You earned a total of " + marks + " marks.") # Prints a message thanking the user for playing, and displays the total number of marks they earned
 
-    run_next: str = input(f"Would you like to do another topic? (y/n)\n").lower() # Asks the user if they want to continue
+    run_next: str = input("Would you like to do another topic? (y/n)\n").lower() # Asks the user if they want to continue
     if run_next == "y" or run_next == "yes":
         run_selection() # If they choose yes, run the selection process again
     else: 
