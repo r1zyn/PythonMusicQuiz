@@ -133,10 +133,10 @@ def run_selection() -> None:
     Gives the user to continue with other topics once they have completed a topic.
     """
 
-    selection: str = input("Choose a topic: dynamics, speed and tempo, beats or time signature, clef, all\nYour selection: ").lower() # The user's topic selection
+    selection: str = input("Choose a topic: dynamics, speed and tempo, beats, time signature and clef or all\nYour selection: ").lower() # The user's topic selection
 
     while not selection in topic_list: # Checks if the user's selection is valid
-        selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower() # Prompt them to re-enter their answer
+        selection = input("Please choose a valid topic: dynamics, speed and tempo, beats, time signature and clef or all\nYour selection: ").lower() # Prompt them to re-enter their answer
 
     marks: int = 0 # Initiate marks variable
 

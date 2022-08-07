@@ -111,7 +111,7 @@ def run_questions(question_list: dict[str, Any]) -> int:
 
 def run_selection(all: bool = True) -> None:
     if all:
-        selection: str = input("Choose a topic: dynamics, speed and tempo, beats or time signature, clef, all\nYour selection: ").lower()
+        selection: str = input("Choose a topic: dynamics, speed and tempo, beats, time signature and clef or all\nYour selection: ").lower()
     else:
         selection: str = input("Choose a topic: dynamics, speed and tempo, beats or time signature, clef\nYour selection: ").lower()
         topic_list.pop()

@@ -3,7 +3,7 @@ from constants import questions, topics, topic_list
 from re import search, Match
 
 def get_marks(tries: int = 0, type: str = "", correct_places: int = 0) -> int:
-    if type.lower() == "multichoice" or type.lower() == "word":
+    if type == "multichoice" or type == "word":
         if tries == 1:
             return 10
         elif tries == 2:
@@ -14,14 +14,14 @@ def get_marks(tries: int = 0, type: str = "", correct_places: int = 0) -> int:
             return 1
         else:
             return 0
-    elif type.lower() == "true/false":
+    elif type == "true/false":
         if tries == 1:
             return 10
         elif tries == 2:
             return 5
         else:
             return 0
-    elif type.lower() == "order":
+    elif type == "order":
         if correct_places == 4:
             return 10
         elif correct_places == 3:
@@ -44,14 +44,14 @@ def run_questions(question_list: dict[str, Any]) -> int:
             print("Options:\n" + question["option_string"])
             print("Hint: " + question["hint"])
 
-            answer: str = input("Enter your answer: ").lower()
+            answer: str = input("Enter your answer: ")
             correct_places: int = 0
             option_amount: int = len(question["answer"])
             matches: Union[Match[str], None] = search("^(\d\,\s){3}\d$", answer)
 
             while matches == None:
                 tries += 1
-                answer: str = input("Invalid format, please try again: ").lower()
+                answer: str = input("Invalid format, please try again: ")
 
             for i in range(option_amount):
                 if answer.split(", ")[i] == question["answer"][i]:
@@ -62,16 +62,16 @@ def run_questions(question_list: dict[str, Any]) -> int:
             print("You completed the question with " + str(correct_places) + " correct places. " + question["message"])
             print(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
         elif question["type"] == "word":
-            answer: str = input("Enter your answer: ").lower()
+            answer: str = input("Enter your answer: ")
 
             tries += 1
 
-            while answer != question["answer"].lower():
+            while answer != question["answer"]:
                 if tries == 1:
                     print("Hint: " + question["hint"])
-                    answer = input("Enter your answer: ").lower()
+                    answer = input("Enter your answer: ")
                 else:
-                    answer = input("Incorrect! Re-enter your answer: ").lower()
+                    answer = input("Incorrect! Re-enter your answer: ")
 
                 tries += 1
 
@@ -81,20 +81,20 @@ def run_questions(question_list: dict[str, Any]) -> int:
             print(f"You earned a total of {earned_marks} marks. You now have {marks} marks.")
         else:
             print("Options:\n" + question["option_string"])
-            answer: str = input("Enter your answer: ").lower()
+            answer: str = input("Enter your answer: ")
 
             while not answer in question["options"]:
                 tries += 1
-                answer = input("Invalid answer, please try again: ").lower()
+                answer = input("Invalid answer, please try again: ")
 
             tries += 1
 
-            while answer != question["answer"].lower():
+            while answer != question["answer"]:
                 if tries == 1:
                     print("Hint: " + question["hint"])
-                    answer = input("Enter your answer: ").lower()
+                    answer = input("Enter your answer: ")
                 else:
-                    answer = input("Incorrect! Re-enter your answer: ").lower()
+                    answer = input("Incorrect! Re-enter your answer: ")
 
                 tries += 1
 
@@ -106,13 +106,13 @@ def run_questions(question_list: dict[str, Any]) -> int:
 
 def run_selection(all: bool = True) -> None:
     if all:
-        selection: str = input("Choose a topic: dynamics, speed and tempo, beats or time signature, clef, all\nYour selection: ").lower()
+        selection: str = input("Choose a topic: dynamics, speed and tempo, beats, time signature and clef or all\nYour selection: ")
     else:
-        selection: str = input("Choose a topic: dynamics, speed and tempo, beats or time signature, clef\nYour selection: ").lower()
+        selection: str = input("Choose a topic: dynamics, speed and tempo, beats or time signature, clef\nYour selection: ")
         topic_list.pop()
 
     while not selection in topic_list:
-        selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ").lower()
+        selection = input("Please choose a valid topic: dynamics, speed and tempo, beats or time signature and clef\nYour selection: ")
 
     topic: str = questions[topics[selection]]
     marks: int = 0
@@ -126,7 +126,7 @@ def run_selection(all: bool = True) -> None:
         marks: int = run_questions(topic["questions"])
         print(f"Thanks for playing! You earned a total of {marks} marks.")
 
-    run_next: str = input(f"Would you like to do another topic? (y/n)\n").lower()
+    run_next: str = input(f"Would you like to do another topic? (y/n)\n")
     if run_next == "y" or run_next == "yes":
         run_selection(all=False)
     else: 
