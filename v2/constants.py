@@ -101,12 +101,12 @@ questions: dict[str, Any] = {
         "questions": [
             {
                 "question": "How many beats does a quaver have? (Choose from a, b, c, or d)",
-                            "option_string": "a) 1 beat\nb) 1/2 beat\nc) 1/4 beat\nd)1/8 beat",
-                            "options": ["a", "b", "c", "d"],
-                            "answer": "b",
-                            "hint": "It is shorter than 1 beat.",
-                            "message": "A quaver is shown as a crotchet with 1 singular tail indicating it is halved once, same thing for ones that have more tails.",
-                            "type": "multichoice"
+                "option_string": "a) 1 beat\nb) 1/2 beat\nc) 1/4 beat\nd)1/8 beat",
+                "options": ["a", "b", "c", "d"],
+                "answer": "b",
+                "hint": "It is shorter than 1 beat.",
+                "message": "A quaver is shown as a crotchet with 1 singular tail indicating it is halved once, same thing for ones that have more tails.",
+                "type": "multichoice"
             },
             {
                 "question": "Which of the following lasts 4 beats? (Choose from a, b, c, or d)",

@@ -118,7 +118,7 @@ def run_selection(all: bool = True) -> None:
     marks: int = 0
 
     if selection == "all" or all:
-        for topic in topic_list:
+        for topic in questions.values():
             marks += run_questions(topic["questions"])
 
         print(f"Thanks for playing! You earned a total of {marks} marks.")
